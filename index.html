@@ -316,21 +316,34 @@
       applySheetOffset(nextState === 'open' ? 0 : maxSheetOffset);
     }
 
+    function getEventClientY(event){
+      if(event.touches && event.touches[0]) return event.touches[0].clientY;
+      if(event.changedTouches && event.changedTouches[0]) return event.changedTouches[0].clientY;
+      if(typeof event.clientY === 'number') return event.clientY;
+      return null;
+    }
+
     function beginSheetDrag(e){
-      e.preventDefault();
+      if(e instanceof MouseEvent && e.button !== 0) return;
+      const clientY = getEventClientY(e);
+      if(clientY == null) return;
+      if(e.cancelable) e.preventDefault();
       sheetDragging = true;
-      dragStartY = e.clientY;
+      dragStartY = clientY;
       dragStartOffset = currentSheetOffset;
       dragDistance = 0;
       sheetEl.classList.add('dragging');
-      if(handleEl.setPointerCapture){
+      if(handleEl.setPointerCapture && 'pointerId' in e){
         handleEl.setPointerCapture(e.pointerId);
       }
     }
 
     function moveSheetDrag(e){
       if(!sheetDragging) return;
-      const delta = e.clientY - dragStartY;
+      const clientY = getEventClientY(e);
+      if(clientY == null) return;
+      if(e.cancelable) e.preventDefault();
+      const delta = clientY - dragStartY;
       dragDistance = Math.max(dragDistance, Math.abs(delta));
       applySheetOffset(dragStartOffset + delta);
     }
@@ -338,7 +351,7 @@
     function endSheetDrag(e){
       if(!sheetDragging) return;
       sheetDragging = false;
-      if(handleEl.releasePointerCapture){
+      if(handleEl.releasePointerCapture && 'pointerId' in e){
         handleEl.releasePointerCapture(e.pointerId);
       }
       sheetEl.classList.remove('dragging');
@@ -351,15 +364,30 @@
       setSheetState(nextState);
     }
 
+    function bindSheetDragEvents(){
+      if(window.PointerEvent){
+        handleEl.addEventListener('pointerdown', beginSheetDrag);
+        window.addEventListener('pointermove', moveSheetDrag);
+        window.addEventListener('pointerup', endSheetDrag);
+        window.addEventListener('pointercancel', endSheetDrag);
+      } else {
+        const touchOpts = { passive:false };
+        handleEl.addEventListener('touchstart', beginSheetDrag, touchOpts);
+        window.addEventListener('touchmove', moveSheetDrag, touchOpts);
+        window.addEventListener('touchend', endSheetDrag, touchOpts);
+        window.addEventListener('touchcancel', endSheetDrag, touchOpts);
+        handleEl.addEventListener('mousedown', beginSheetDrag);
+        window.addEventListener('mousemove', moveSheetDrag);
+        window.addEventListener('mouseup', endSheetDrag);
+      }
+    }
+
     function initSheet(){
       if(sheetReady) return;
       sheetReady = true;
       updateSheetMetrics();
       setSheetState('peek');
-      handleEl.addEventListener('pointerdown', beginSheetDrag);
-      window.addEventListener('pointermove', moveSheetDrag);
-      window.addEventListener('pointerup', endSheetDrag);
-      window.addEventListener('pointercancel', endSheetDrag);
+      bindSheetDragEvents();
       handleEl.addEventListener('keydown', (event) => {
         if(event.key === 'Enter' || event.key === ' '){
           event.preventDefault();
