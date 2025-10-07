@@ -218,7 +218,7 @@
   <section class="sheet" aria-labelledby="list-title" aria-expanded="false">
     <div class="grip">
       <div class="handle" role="button" tabindex="0" aria-label="Toggle locations list" aria-expanded="false"></div>
-      <button class="toggle-btn" type="button" aria-label="Expand locations list" aria-expanded="false">Expand list</button>
+      <button class="toggle-btn" type="button" aria-label="Expand locations list" aria-expanded="false">Expand</button>
     </div>
     <div class="content">
       <div class="searchbar">
@@ -345,7 +345,7 @@
         const expanded = nextState === 'open';
         toggleBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
         toggleBtn.setAttribute('aria-label', expanded ? 'Collapse locations list' : 'Expand locations list');
-        toggleBtn.textContent = expanded ? 'Collapse list' : 'Expand list';
+        toggleBtn.textContent = expanded ? 'Collapse' : 'Expand';
       }
       sheetEl.classList.remove('dragging');
       applySheetOffset(nextState === 'open' ? 0 : maxSheetOffset);
