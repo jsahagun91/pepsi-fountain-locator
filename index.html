@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pepsi Fountain & Bar Gun Locator</title>
+  <meta name="description" content="Find restaurants serving Pepsi on fountain or bar guns. Mobile-friendly map with blue pins and directions." />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://{s}.tile.openstreetmap.org" crossorigin>
+  <link rel="icon" type="image/svg+xml" href="assets/Pepsi_2023.svg">
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin="anonymous"
+  />
+  <style>
+    :root{
+      --brand:#005CB9; /* Pepsi primary */
+      --brand-dark:#00338C;
+      --brand-light:#2d7df4;
+      --bg:#001437;
+      --surface:rgba(1,34,83,0.82);
+      --card:rgba(3,40,103,0.88);
+      --text:#f4f7ff;
+      --muted:#c5d8ff;
+      --outline:rgba(255,255,255,0.18);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; color:var(--text);
+      background:linear-gradient(180deg,var(--bg) 0%, var(--brand-dark) 100%);
+      display:flex; flex-direction:column; min-height:100vh;
+    }
+    header{
+      position:sticky; top:0; z-index:1000;
+      background:linear-gradient(135deg,var(--brand-dark),var(--brand));
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
+      padding:.9rem 1.1rem; display:flex; align-items:center; gap:.85rem;
+      color:var(--text);
+    }
+    .logo{
+      width:40px; height:40px; border-radius:50%;
+      background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center;
+      box-shadow:0 6px 14px rgba(0,0,0,.35); padding:4px;
+    }
+    .logo img{width:100%; height:100%; display:block}
+    .title{font-weight:700; font-size:1.05rem; line-height:1.1}
+    .subtitle{font-size:.8rem; color:var(--muted)}
+
+    .container{flex:1; min-height:0; position:relative; display:flex}
+    #map{flex:1; min-height:0; width:100%;}
+
+    /* Bottom sheet for list */
+    .sheet{
+      position:fixed; left:0; right:0; bottom:0; z-index:999;
+      background:var(--surface); border-top-left-radius:16px; border-top-right-radius:16px;
+      border:1px solid var(--outline);
+      box-shadow:0 -12px 36px rgba(0,0,0,.4);
+      max-height:55vh;
+      transform:translateY(0);
+      transition:transform .3s ease;
+      will-change:transform;
+    }
+    .sheet.dragging{transition:none}
+    .sheet .handle{
+      width:44px; height:5px; background:rgba(255,255,255,.45); border-radius:5px; margin:8px auto;
+      cursor:grab; touch-action:none;
+    }
+    .sheet.dragging .handle{cursor:grabbing}
+    .sheet .content{padding:.5rem .9rem 1rem; overflow:auto; max-height:calc(55vh - 28px)}
+    .searchbar{display:flex; gap:.5rem; margin:.25rem 0 .5rem}
+    .searchbar input{
+      flex:1; padding:.65rem .75rem;
+      border:1px solid var(--outline); border-radius:10px;
+      font-size:.95rem; background:rgba(255,255,255,.08); color:var(--text);
+      backdrop-filter:blur(6px);
+    }
+    .searchbar input::placeholder{color:rgba(244,247,255,.72)}
+    .badge{
+      display:inline-flex; align-items:center; gap:.4rem; font-size:.75rem;
+      background:rgba(0,92,185,.35); color:#fff; padding:.25rem .5rem; border-radius:999px;
+      border:1px solid rgba(255,255,255,.2);
+    }
+    .list{display:grid; gap:.5rem}
+    .card{
+      background:#ffffff; border:1px solid rgba(0,0,0,.06);
+      border-radius:14px; padding:.85rem; display:grid; gap:.25rem;
+      box-shadow:0 16px 32px rgba(0,0,0,.25);
+      color:#000;
+    }
+    .card h3{margin:0; font-size:1rem}
+    .meta{font-size:.85rem; color:#000}
+    .addr{font-size:.85rem; color:#000}
+    .actions{display:flex; gap:.5rem; margin-top:.35rem}
+    .btn{
+      appearance:none; border:none; border-radius:10px;
+      padding:.55rem .7rem; font-weight:600; cursor:pointer;
+      transition:background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,var(--brand),var(--brand-light));
+      color:#fff; box-shadow:0 6px 16px rgba(0,92,185,.35);
+    }
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-outline{
+      background:transparent; color:var(--brand);
+      border:1px solid var(--brand);
+    }
+    .btn-outline:hover{
+      background:rgba(0,92,185,.1);
+    }
+
+    /* Floating controls */
+    .fab{
+      position:fixed; right:12px; bottom:62vh; z-index:900;
+      background:var(--surface); border:1px solid var(--outline); border-radius:12px;
+      box-shadow:0 12px 28px rgba(0,0,0,.35);
+      display:flex; flex-direction:column; overflow:hidden;
+      backdrop-filter:blur(6px);
+    }
+    .fab button{all:unset; padding:.65rem; cursor:pointer; color:var(--text); text-align:center; transition:background .2s ease}
+    .fab button + button{border-top:1px solid var(--outline)}
+    .fab button:hover{background:rgba(255,255,255,.12)}
+
+    .pepsi-pin{
+      position:relative;
+      width:44px;
+      height:58px;
+    }
+    .pepsi-pin__bubble{
+      position:absolute;
+      top:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #7bc2ff 0%, #0a6ce0 45%, var(--brand-dark) 100%);
+      border:3px solid #fff;
+      box-shadow:0 10px 24px rgba(0,0,0,.4);
+    }
+    .pepsi-pin__bubble::after{
+      content:'';
+      position:absolute;
+      left:50%;
+      bottom:-22px;
+      transform:translateX(-50%);
+      width:0;
+      height:0;
+      border:13px solid transparent;
+      border-top:22px solid var(--brand);
+      filter:drop-shadow(0 6px 14px rgba(0,0,0,.4));
+    }
+
+    details{color:var(--text)}
+    details > div{color:rgba(244,247,255,.8)}
+    summary{color:inherit}
+    code{
+      background:rgba(255,255,255,.12); color:#fff; padding:2px 4px;
+      border-radius:4px; font-size:.85em;
+    }
+
+    @media (min-width: 720px){
+      .sheet{max-width:520px; left:auto; right:16px; bottom:16px; border-radius:16px; max-height:70vh}
+      .fab{bottom:auto; top:96px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" aria-hidden="true">
+      <img src="assets/Pepsi_2023.svg" alt="Pepsi logo">
+    </div>
+    <div>
+      <div class="title">Pepsi Fountain & Bar Gun Locator</div>
+      <div class="subtitle">Blue pins = Pepsi on tap / bar guns</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="map" role="region" aria-label="Map of restaurants serving Pepsi"></div>
+  </div>
+
+  <!-- Floating map controls -->
+  <div class="fab" aria-label="Map controls">
+    <button id="geoBtn" title="Use my location" aria-label="Use my location">📍</button>
+    <button id="resetBtn" title="Reset view" aria-label="Reset view">🗺️</button>
+  </div>
+
+  <!-- Bottom sheet: list & quick add instructions -->
+  <section class="sheet" aria-labelledby="list-title" aria-expanded="false">
+    <div class="handle" role="button" tabindex="0" aria-label="Toggle locations list" aria-expanded="false"></div>
+    <div class="content">
+      <div class="searchbar">
+        <input id="searchInput" type="search" placeholder="Search name, cuisine, or address" aria-label="Search locations"/>
+        <span class="badge" title="All pins are Pepsi">💙 Pepsi</span>
+      </div>
+      <h2 id="list-title" style="font-size:1rem; margin:.25rem 0 .5rem">Locations</h2>
+      <div class="list" id="list"></div>
+    </div>
+  </section>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin="anonymous"></script>
+
+  <script>
+    // --- 1) Seed data --------------------------------------------------------
+    // Add new places by pushing objects to this array.
+    // You can provide lat/lng to skip geocoding.
+    const LOCATIONS = [
+      {
+        name: "Carmen’s La Hacienda",
+        cuisine: "Mexican Cuisine",
+        address: "1401 Grant Ave, Novato, CA 94945",
+        // If you know exact coords, fill them here to avoid geocoding each load.
+        // These center on Novato and are close; geocoder will refine the pin.
+        lat: 38.10742, lng: -122.56970
+      },
+      {
+        name: "Ayawaska Hilltop",
+        cuisine: "Peruvian Cuisine",
+        address: "850 Lamont Ave, Novato, CA 94945",
+        // If you know exact coords, fill them here to avoid geocoding each load.
+        // These center on Novato and are close; geocoder will refine the pin.
+        lat: 38.102375703396234, lng: -122.56754100186158
+      },
+      {
+        name: "El Rey Mexican Bar and Grill",
+        cuisine: "Mexican Cuisine",
+        address: "940 7th St, Novato, CA 94945",
+        // If you know exact coords, fill them here to avoid geocoding each load.
+        // These center on Novato and are close; geocoder will refine the pin.
+        lat: 38.108066269413854, lng: -122.57821210800124
+      },
+    ];
+
+    // --- 2) Map setup --------------------------------------------------------
+    const map = L.map('map', {
+      zoomControl: false,
+      attributionControl: true
+    });
+
+    // OSM tiles
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Controls
+    L.control.zoom({ position: 'topright' }).addTo(map);
+
+    // Fit to Novato by default
+    const DEFAULT_VIEW = { center: [38.10742, -122.56970], zoom: 13 };
+    map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
+
+    // --- 3) Utilities --------------------------------------------------------
+    const markers = [];
+    const listEl = document.getElementById('list');
+    const searchInput = document.getElementById('searchInput');
+    const pepsiIcon = L.divIcon({
+      className: 'pepsi-pin',
+      html: '<div class="pepsi-pin__bubble"></div>',
+      iconSize: [44, 58],
+      iconAnchor: [22, 58],
+      popupAnchor: [0, -48],
+      tooltipAnchor: [0, -36]
+    });
+
+    // Bottom sheet interaction
+    const sheetEl = document.querySelector('.sheet');
+    const handleEl = sheetEl.querySelector('.handle');
+    const MIN_VISIBLE_HEIGHT = 140;
+    let sheetState = 'peek';
+    let sheetDragging = false;
+    let dragStartY = 0;
+    let dragStartOffset = 0;
+    let dragDistance = 0;
+    let currentSheetOffset = 0;
+    let maxSheetOffset = 0;
+    let sheetReady = false;
+
+    function clampSheetOffset(value){
+      return Math.min(Math.max(value, 0), maxSheetOffset);
+    }
+
+    function applySheetOffset(value){
+      currentSheetOffset = clampSheetOffset(value);
+      sheetEl.style.transform = `translateY(${currentSheetOffset}px)`;
+    }
+
+    function syncSheetPosition(){
+      sheetEl.classList.add('dragging');
+      applySheetOffset(sheetState === 'open' ? 0 : maxSheetOffset);
+      requestAnimationFrame(() => sheetEl.classList.remove('dragging'));
+    }
+
+    function updateSheetMetrics(){
+      const rect = sheetEl.getBoundingClientRect();
+      maxSheetOffset = Math.max(0, rect.height - MIN_VISIBLE_HEIGHT);
+      syncSheetPosition();
+    }
+
+    function setSheetState(nextState){
+      sheetState = nextState;
+      sheetEl.dataset.state = nextState;
+      sheetEl.setAttribute('aria-expanded', nextState === 'open' ? 'true' : 'false');
+      handleEl.setAttribute('aria-expanded', nextState === 'open' ? 'true' : 'false');
+      sheetEl.classList.remove('dragging');
+      applySheetOffset(nextState === 'open' ? 0 : maxSheetOffset);
+    }
+
+    function beginSheetDrag(e){
+      e.preventDefault();
+      sheetDragging = true;
+      dragStartY = e.clientY;
+      dragStartOffset = currentSheetOffset;
+      dragDistance = 0;
+      sheetEl.classList.add('dragging');
+      if(handleEl.setPointerCapture){
+        handleEl.setPointerCapture(e.pointerId);
+      }
+    }
+
+    function moveSheetDrag(e){
+      if(!sheetDragging) return;
+      const delta = e.clientY - dragStartY;
+      dragDistance = Math.max(dragDistance, Math.abs(delta));
+      applySheetOffset(dragStartOffset + delta);
+    }
+
+    function endSheetDrag(e){
+      if(!sheetDragging) return;
+      sheetDragging = false;
+      if(handleEl.releasePointerCapture){
+        handleEl.releasePointerCapture(e.pointerId);
+      }
+      sheetEl.classList.remove('dragging');
+      if(dragDistance < 6){
+        setSheetState(sheetState === 'open' ? 'peek' : 'open');
+        return;
+      }
+      const midpoint = maxSheetOffset * 0.5;
+      const nextState = currentSheetOffset > midpoint ? 'peek' : 'open';
+      setSheetState(nextState);
+    }
+
+    function initSheet(){
+      if(sheetReady) return;
+      sheetReady = true;
+      updateSheetMetrics();
+      setSheetState('peek');
+      handleEl.addEventListener('pointerdown', beginSheetDrag);
+      window.addEventListener('pointermove', moveSheetDrag);
+      window.addEventListener('pointerup', endSheetDrag);
+      window.addEventListener('pointercancel', endSheetDrag);
+      handleEl.addEventListener('keydown', (event) => {
+        if(event.key === 'Enter' || event.key === ' '){
+          event.preventDefault();
+          setSheetState(sheetState === 'open' ? 'peek' : 'open');
+        }
+      });
+      window.addEventListener('resize', updateSheetMetrics);
+    }
+
+    function openDirections({lat, lng, name}){
+      const q = encodeURIComponent(`${lat},${lng} (${name})`);
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
+      window.open(url, '_blank');
+    }
+
+    function createPopupHTML(place){
+      return `
+        <div style="min-width:180px">
+          <div style="font-weight:700; margin-bottom:2px">${place.name}</div>
+          <div style="font-size:.9rem; color:#000">${place.cuisine || ''}</div>
+          <div style="font-size:.85rem; color:#000; margin:.25rem 0">${place.address || ''}</div>
+          <button aria-label="Directions" style="background:linear-gradient(135deg,var(--brand),var(--brand-light)); color:#fff; border:none; border-radius:8px; padding:.4rem .6rem; font-weight:600; cursor:pointer; box-shadow:0 6px 16px rgba(0,92,185,.35)" onclick='(${openDirections.toString()})({lat:${place.lat},lng:${place.lng},name:${JSON.stringify(place.name)}})'>Get Directions</button>
+        </div>`;
+    }
+
+    // Geocode with Nominatim (OSM). Be kind to their service (1 req/sec typical).
+    async function geocodeAddress(address){
+      const url = new URL('https://nominatim.openstreetmap.org/search');
+      url.searchParams.set('q', address);
+      url.searchParams.set('format', 'json');
+      url.searchParams.set('limit', '1');
+      // Identify your app per Nominatim usage policy
+      const res = await fetch(url.toString(), { headers: { 'Accept-Language': 'en', 'User-Agent': 'Pepsi-Fountain-Locator/1.0 (contact: owner@example.com)' }});
+      if(!res.ok) throw new Error('Geocoding failed');
+      const data = await res.json();
+      if(data && data[0]){
+        return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+      }
+      throw new Error('No results');
+    }
+
+    async function addMarker(place){
+      try{
+        if((place.lat == null || place.lng == null) && place.address){
+          const {lat, lng} = await geocodeAddress(place.address);
+          place.lat = lat; place.lng = lng;
+        }
+        if(place.lat == null || place.lng == null) return;
+        const marker = L.marker([place.lat, place.lng], { icon: pepsiIcon });
+        marker.bindPopup(createPopupHTML(place));
+        marker.addTo(map);
+        markers.push({ marker, place });
+      }catch(err){
+        console.warn('Could not add marker for', place.name, err);
+      }
+    }
+
+    function renderList(items){
+      listEl.innerHTML = '';
+      items.forEach(({place, marker}) => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <h3>${place.name}</h3>
+          <div class="meta">${place.cuisine || ''}</div>
+          <div class="addr">${place.address || ''}</div>
+          <div class="actions">
+            <button class="btn btn-primary">Open on Map</button>
+            <button class="btn btn-outline">Directions</button>
+          </div>`;
+        const [openBtn, dirBtn] = card.querySelectorAll('button');
+        openBtn.addEventListener('click', () => {
+          map.setView([place.lat, place.lng], 17);
+          marker.openPopup();
+        });
+        dirBtn.addEventListener('click', () => openDirections(place));
+        listEl.appendChild(card);
+      });
+      if(sheetReady){
+        requestAnimationFrame(updateSheetMetrics);
+      }
+    }
+
+    function filterList(term){
+      const q = term.trim().toLowerCase();
+      const filtered = markers.filter(({place}) => {
+        return [place.name, place.cuisine, place.address]
+          .filter(Boolean)
+          .some(x => x.toLowerCase().includes(q));
+      });
+      renderList(filtered);
+    }
+
+    // Initialize
+    (async function init(){
+      for(const p of LOCATIONS){ await addMarker(p); }
+      // Fit bounds if we have multiple; otherwise keep default view
+      if(markers.length === 1){ map.setView(markers[0].marker.getLatLng(), 16); }
+      if(markers.length > 1){
+        const group = L.featureGroup(markers.map(m=>m.marker));
+        map.fitBounds(group.getBounds().pad(0.2));
+      }
+      // Render initial list
+      renderList(markers);
+      initSheet();
+    })();
+
+    // Search
+    searchInput.addEventListener('input', (e)=> filterList(e.target.value));
+
+    // Geolocate
+    document.getElementById('geoBtn').addEventListener('click', ()=>{
+      if(!navigator.geolocation){ alert('Geolocation not supported on this device.'); return; }
+      navigator.geolocation.getCurrentPosition((pos)=>{
+        const { latitude, longitude } = pos.coords;
+        map.setView([latitude, longitude], 15);
+        // Optional: drop a temporary pin for the user location
+        L.circleMarker([latitude, longitude], {
+          radius:6,
+          color:'#ffffff',
+          weight:2,
+          fillColor:'#005CB9',
+          fillOpacity:0.95
+        }).addTo(map).bindTooltip('You are here').openTooltip();
+      }, (err)=>{
+        alert('Could not get your location. Check permissions.');
+      }, { enableHighAccuracy:true, timeout:8000, maximumAge:60000 });
+    });
+
+    // Reset view
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      if(markers.length > 1){
+        const group = L.featureGroup(markers.map(m=>m.marker));
+        map.fitBounds(group.getBounds().pad(0.2));
+      } else {
+        map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
+      }
+    });
+  </script>
+</body>
+</html>
