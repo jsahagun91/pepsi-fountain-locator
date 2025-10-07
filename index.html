@@ -261,6 +261,7 @@
 
     // --- 3) Utilities --------------------------------------------------------
     const markers = [];
+    let userLocation = null;
     const listEl = document.getElementById('list');
     const searchInput = document.getElementById('searchInput');
     const pepsiIcon = L.divIcon({
@@ -400,6 +401,34 @@
       throw new Error('No results');
     }
 
+    function toRadians(value){
+      return value * (Math.PI / 180);
+    }
+
+    function computeDistanceMiles(lat1, lng1, lat2, lng2){
+      const R = 3958.8; // Earth radius in miles
+      const dLat = toRadians(lat2 - lat1);
+      const dLng = toRadians(lng2 - lng1);
+      const radLat1 = toRadians(lat1);
+      const radLat2 = toRadians(lat2);
+      const a = Math.sin(dLat / 2) ** 2 + Math.cos(radLat1) * Math.cos(radLat2) * Math.sin(dLng / 2) ** 2;
+      const c = 2 * Math.asin(Math.min(1, Math.sqrt(a)));
+      return R * c;
+    }
+
+    function updateDistances(){
+      if(!userLocation){
+        markers.forEach(entry => entry.distance = null);
+        return;
+      }
+      markers.forEach(entry => {
+        const { lat, lng } = entry.place;
+        entry.distance = (typeof lat === 'number' && typeof lng === 'number')
+          ? computeDistanceMiles(userLocation.lat, userLocation.lng, lat, lng)
+          : null;
+      });
+    }
+
     async function addMarker(place){
       try{
         if((place.lat == null || place.lng == null) && place.address){
@@ -410,7 +439,11 @@
         const marker = L.marker([place.lat, place.lng], { icon: pepsiIcon });
         marker.bindPopup(createPopupHTML(place));
         marker.addTo(map);
-        markers.push({ marker, place });
+        const entry = { marker, place, distance: null };
+        markers.push(entry);
+        if(userLocation){
+          entry.distance = computeDistanceMiles(userLocation.lat, userLocation.lng, place.lat, place.lng);
+        }
       }catch(err){
         console.warn('Could not add marker for', place.name, err);
       }
@@ -418,11 +451,22 @@
 
     function renderList(items){
       listEl.innerHTML = '';
-      items.forEach(({place, marker}) => {
+      const sortedItems = userLocation
+        ? [...items].sort((a, b) => {
+            const distA = Number.isFinite(a.distance) ? a.distance : Number.POSITIVE_INFINITY;
+            const distB = Number.isFinite(b.distance) ? b.distance : Number.POSITIVE_INFINITY;
+            return distA - distB;
+          })
+        : [...items];
+      sortedItems.forEach(({place, marker, distance}) => {
+        const distanceLabel = userLocation && Number.isFinite(distance)
+          ? `<div class="meta">${distance.toFixed(1)} miles away</div>`
+          : '';
         const card = document.createElement('article');
         card.className = 'card';
         card.innerHTML = `
           <h3>${place.name}</h3>
+          ${distanceLabel}
           <div class="meta">${place.cuisine || ''}</div>
           <div class="addr">${place.address || ''}</div>
           <div class="actions">
@@ -474,6 +518,9 @@
       if(!navigator.geolocation){ alert('Geolocation not supported on this device.'); return; }
       navigator.geolocation.getCurrentPosition((pos)=>{
         const { latitude, longitude } = pos.coords;
+        userLocation = { lat: latitude, lng: longitude };
+        updateDistances();
+        filterList(searchInput.value);
         map.setView([latitude, longitude], 15);
         // Optional: drop a temporary pin for the user location
         L.circleMarker([latitude, longitude], {
