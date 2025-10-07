@@ -75,11 +75,25 @@
       will-change:transform;
     }
     .sheet.dragging{transition:none}
+    .sheet .grip{
+      display:flex; flex-direction:column; align-items:center; gap:6px;
+      padding:8px 0 4px;
+    }
     .sheet .handle{
-      width:44px; height:5px; background:rgba(255,255,255,.45); border-radius:5px; margin:8px auto;
+      width:44px; height:5px; background:rgba(255,255,255,.45); border-radius:5px; margin:0 auto;
       cursor:grab; touch-action:none;
     }
     .sheet.dragging .handle{cursor:grabbing}
+    .sheet .toggle-btn{
+      appearance:none; border:1px solid rgba(255,255,255,0.35);
+      background:rgba(255,255,255,0.12); color:var(--text);
+      font-size:.75rem; padding:.25rem .6rem; border-radius:999px;
+      display:inline-flex; align-items:center; gap:.35rem;
+      cursor:pointer; transition:background .2s ease, border-color .2s ease;
+    }
+    .sheet .toggle-btn:hover{
+      background:rgba(255,255,255,0.22); border-color:rgba(255,255,255,0.55);
+    }
     .sheet .content{padding:.5rem .9rem 1rem; overflow:auto; max-height:calc(55vh - 28px)}
     .searchbar{display:flex; gap:.5rem; margin:.25rem 0 .5rem}
     .searchbar input{
@@ -202,7 +216,10 @@
 
   <!-- Bottom sheet: list & quick add instructions -->
   <section class="sheet" aria-labelledby="list-title" aria-expanded="false">
-    <div class="handle" role="button" tabindex="0" aria-label="Toggle locations list" aria-expanded="false"></div>
+    <div class="grip">
+      <div class="handle" role="button" tabindex="0" aria-label="Toggle locations list" aria-expanded="false"></div>
+      <button class="toggle-btn" type="button" aria-label="Expand locations list" aria-expanded="false">Expand list</button>
+    </div>
     <div class="content">
       <div class="searchbar">
         <input id="searchInput" type="search" placeholder="Search name, cuisine, or address" aria-label="Search locations"/>
@@ -286,6 +303,7 @@
     // Bottom sheet interaction
     const sheetEl = document.querySelector('.sheet');
     const handleEl = sheetEl.querySelector('.handle');
+    const toggleBtn = sheetEl.querySelector('.toggle-btn');
     const MIN_VISIBLE_HEIGHT = 140;
     let sheetState = 'peek';
     let sheetDragging = false;
@@ -322,6 +340,13 @@
       sheetEl.dataset.state = nextState;
       sheetEl.setAttribute('aria-expanded', nextState === 'open' ? 'true' : 'false');
       handleEl.setAttribute('aria-expanded', nextState === 'open' ? 'true' : 'false');
+      handleEl.setAttribute('aria-label', nextState === 'open' ? 'Collapse locations list' : 'Expand locations list');
+      if(toggleBtn){
+        const expanded = nextState === 'open';
+        toggleBtn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        toggleBtn.setAttribute('aria-label', expanded ? 'Collapse locations list' : 'Expand locations list');
+        toggleBtn.textContent = expanded ? 'Collapse list' : 'Expand list';
+      }
       sheetEl.classList.remove('dragging');
       applySheetOffset(nextState === 'open' ? 0 : maxSheetOffset);
     }
@@ -404,6 +429,11 @@
           setSheetState(sheetState === 'open' ? 'peek' : 'open');
         }
       });
+      if(toggleBtn){
+        toggleBtn.addEventListener('click', () => {
+          setSheetState(sheetState === 'open' ? 'peek' : 'open');
+        });
+      }
       window.addEventListener('resize', updateSheetMetrics);
     }
 
