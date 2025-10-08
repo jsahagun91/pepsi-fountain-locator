@@ -26,6 +26,10 @@
     crossorigin="anonymous"
   />
   <style>
+
+    .leaflet-control-attribution, .leaflet-control{
+        display: none !important;
+    }
     :root{
       --brand:#005CB9; /* Pepsi primary */
       --brand-dark:#00338C;
@@ -36,6 +40,7 @@
       --text:#f4f7ff;
       --muted:#c5d8ff;
       --outline:rgba(255,255,255,0.18);
+      --fab-offset-mobile:62vh;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -139,7 +144,7 @@
 
     /* Floating controls */
     .fab{
-      position:fixed; right:12px; bottom:62vh; z-index:900;
+      position:fixed; right:12px; bottom:var(--fab-offset-mobile); z-index:900;
       background:var(--surface); border:1px solid var(--outline); border-radius:12px;
       box-shadow:0 12px 28px rgba(0,0,0,.35);
       display:flex; flex-direction:column; overflow:hidden;
@@ -148,6 +153,21 @@
     .fab button{all:unset; padding:.65rem; cursor:pointer; color:var(--text); text-align:center; transition:background .2s ease}
     .fab button + button{border-top:1px solid var(--outline)}
     .fab button:hover{background:rgba(255,255,255,.12)}
+    .zoom-mobile{
+      display:none;
+    }
+    @media (max-width: 719px){
+      .zoom-mobile{
+        display:flex; flex-direction:column; border-bottom:1px solid var(--outline);
+      }
+      .zoom-mobile button{border-top:none}
+      .zoom-mobile button + button{border-top:1px solid var(--outline)}
+      .leaflet-control-zoom{display:none !important}
+      .leaflet-control-container .leaflet-bottom.leaflet-right{
+        bottom:calc(var(--fab-offset-mobile) + 72px);
+        right:12px;
+      }
+    }
 
     .pepsi-pin{
       position:relative;
@@ -210,6 +230,10 @@
 
   <!-- Floating map controls -->
   <div class="fab" aria-label="Map controls">
+    <div class="zoom-mobile" role="group" aria-label="Map zoom controls">
+      <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+      <button type="button" data-zoom="out" aria-label="Zoom out">-</button>
+    </div>
     <button id="geoBtn" title="Use my location" aria-label="Use my location">📍</button>
     <button id="resetBtn" title="Reset view" aria-label="Reset view">🗺️</button>
   </div>
@@ -300,7 +324,33 @@
     }).addTo(map);
 
     // Controls
-    L.control.zoom({ position: 'topleft' }).addTo(map);
+    function getZoomControlPosition(){
+      return window.matchMedia('(min-width: 720px)').matches ? 'topleft' : 'bottomright';
+    }
+    let currentZoomPosition = getZoomControlPosition();
+    const zoomControl = L.control.zoom({ position: currentZoomPosition }).addTo(map);
+    function syncZoomControlPosition(){
+      const desired = getZoomControlPosition();
+      if(desired !== currentZoomPosition){
+        currentZoomPosition = desired;
+        zoomControl.setPosition(desired);
+      }
+    }
+    const zoomMediaQuery = window.matchMedia('(min-width: 720px)');
+    if(zoomMediaQuery.addEventListener){
+      zoomMediaQuery.addEventListener('change', syncZoomControlPosition);
+    } else if(zoomMediaQuery.addListener){
+      zoomMediaQuery.addListener(syncZoomControlPosition);
+    }
+    const zoomInFabBtn = document.querySelector('.zoom-mobile button[data-zoom="in"]');
+    const zoomOutFabBtn = document.querySelector('.zoom-mobile button[data-zoom="out"]');
+    window.addEventListener('resize', syncZoomControlPosition);
+    if(zoomInFabBtn){
+      zoomInFabBtn.addEventListener('click', () => map.zoomIn());
+    }
+    if(zoomOutFabBtn){
+      zoomOutFabBtn.addEventListener('click', () => map.zoomOut());
+    }
 
     // Fit to Novato by default
     const DEFAULT_VIEW = { center: [38.10742, -122.56970], zoom: 13 };
