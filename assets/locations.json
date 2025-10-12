@@ -1,0 +1,896 @@
+[
+  {
+    "name": "2am Club",
+    "address": "380 Miller Ave, Mill Valley, CA",
+    "lat": 37.8972528,
+    "lng": -122.5371887
+  },
+  {
+    "name": "5 Star Burger",
+    "address": "1015 Redwood St, Vallejo, CA",
+    "lat": 38.1222346,
+    "lng": -122.2514294
+  },
+  {
+    "name": "Acme Burger Petaluma",
+    "address": "330 Western Ave, Petaluma, CA",
+    "lat": 38.2330891,
+    "lng": -122.6438719
+  },
+  {
+    "name": "Acme Burger Petaluma East",
+    "address": "701 Sonoma Mountain Pkwy Ste D1, Petaluma, CA",
+    "lat": 38.2697049,
+    "lng": -122.6389113
+  },
+  {
+    "name": "After Hours Cocktail Lounge",
+    "address": "1687 Lewis Brown Dr, Vallejo, CA",
+    "lat": 38.1420433,
+    "lng": -122.2500511
+  },
+  {
+    "name": "Alibertos JR Fresh Mexican",
+    "address": "991 Redwood St, Vallejo, CA",
+    "lat": 38.1222617,
+    "lng": -122.2521888
+  },
+  {
+    "name": "Andies Cafe",
+    "address": "1042 Freeway Dr, Napa, CA",
+    "lat": 38.2991567,
+    "lng": -122.3045412
+  },
+  {
+    "name": "Angelos Meat",
+    "address": "23400 Arnold Dr, Sonoma, CA",
+    "lat": 38.22995,
+    "lng": -122.4588353
+  },
+  {
+    "name": "Aurora Novato",
+    "address": "8 Commercial Blvd, Novato, CA",
+    "lat": 38.0684145,
+    "lng": -122.5337224
+  },
+  {
+    "name": "Ayawaska Hilltop",
+    "cuisine": "Peruvian Cuisine",
+    "address": "850 Lamont Ave, Novato, CA 94945",
+    "lat": 38.1023757,
+    "lng": -122.567541
+  },
+  {
+    "name": "Bel King Indian Grill",
+    "address": "5075 Main St Ste 122, American Canyon, CA",
+    "lat": 38.180871,
+    "lng": -122.2541111
+  },
+  {
+    "name": "Big D Burger",
+    "address": "1005 Silverado Trl, Napa, CA",
+    "lat": 38.3013232,
+    "lng": -122.2763026
+  },
+  {
+    "name": "Bonchon Petaluma",
+    "address": "447 N Mcdowell Blvd Ste 14, Petaluma, CA",
+    "lat": 38.2540604,
+    "lng": -122.6363635
+  },
+  {
+    "name": "Buds Burgers",
+    "address": "3849 Sonoma Blvd, Vallejo, CA",
+    "lat": 38.1264181,
+    "lng": -122.2559134
+  },
+  {
+    "name": "Cafe Bellini",
+    "address": "100 S Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.249048,
+    "lng": -122.625761
+  },
+  {
+    "name": "Cafe Mimosa",
+    "address": "417 N Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2557225,
+    "lng": -122.6377314
+  },
+  {
+    "name": "Carmen's La Hacienda",
+    "cuisine": "Mexican Cuisine",
+    "address": "1401 Grant Ave, Novato, CA 94945",
+    "lat": 38.1085044,
+    "lng": -122.5745947
+  },
+  {
+    "name": "Carmen's La Hacienda (Fairfax)",
+    "address": "715 Center Blvd, Fairfax, CA",
+    "lat": 37.9864619,
+    "lng": -122.5851824
+  },
+  {
+    "name": "Carnitas El Rincon Vallejo",
+    "address": "818 Tennessee St, Vallejo, CA",
+    "lat": 38.1100062,
+    "lng": -122.2493444
+  },
+  {
+    "name": "Chicken Express",
+    "address": "1075 Redwood St, Vallejo, CA",
+    "lat": 38.1223291,
+    "lng": -122.2499764
+  },
+  {
+    "name": "Cordeiros Bar And Grill",
+    "address": "2025 Monticello Rd, Napa, CA",
+    "lat": 38.3384285,
+    "lng": -122.2593916
+  },
+  {
+    "name": "Daikon Korean BBQ Vallejo",
+    "address": "124 Plaza Dr, Vallejo, CA",
+    "lat": 38.1338616,
+    "lng": -122.2172021
+  },
+  {
+    "name": "Ditas",
+    "address": "562 Bridgeway, Sausalito, CA",
+    "lat": 37.8537349,
+    "lng": -122.4790475
+  },
+  {
+    "name": "Downtown Joes",
+    "address": "902 Main St, Napa, CA",
+    "lat": 38.502779,
+    "lng": -122.4660022
+  },
+  {
+    "name": "Eggspresso",
+    "address": "173 N Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2512251,
+    "lng": -122.629643
+  },
+  {
+    "name": "El Rey Mexican Bar And Grill",
+    "address": "940 7th St, Novato, CA",
+    "lat": 38.1065418,
+    "lng": -122.578634
+  },
+  {
+    "name": "Emmy Lous Diner",
+    "address": "1429 W Imola Ave, Napa, CA",
+    "lat": 38.2817779,
+    "lng": -122.2909685
+  },
+  {
+    "name": "Extreme Pizza",
+    "address": "703 4th St, San Rafael, CA",
+    "lat": 37.9725855,
+    "lng": -122.5227757
+  },
+  {
+    "name": "Extreme Pizza",
+    "address": "3100 Lakeville Hwy, Petaluma, CA",
+    "lat": 38.2338065,
+    "lng": -122.5995516
+  },
+  {
+    "name": "Extreme Pizza - Novato",
+    "address": "104 Vintage Way, Novato, CA",
+    "lat": 38.0913794,
+    "lng": -122.5536235
+  },
+  {
+    "name": "Farmhouse",
+    "address": "18999 Sonoma Hwy, Sonoma, CA",
+    "lat": 38.3030211,
+    "lng": -122.4760337
+  },
+  {
+    "name": "Fazerratis Pizza Restaurant",
+    "address": "1517 W Imola Ave, Napa, CA",
+    "lat": 38.2818334,
+    "lng": -122.2916218
+  },
+  {
+    "name": "Filippis Pizza Grotto",
+    "address": "645 1st St, Napa, CA",
+    "lat": 38.3008969,
+    "lng": -122.2816674
+  },
+  {
+    "name": "Fire Wings",
+    "address": "137 Plaza Dr, Vallejo, CA",
+    "lat": 38.1318771,
+    "lng": -122.2156927
+  },
+  {
+    "name": "Flamingo Restaurant And Banquet",
+    "address": "910 Lincoln Rd E, Vallejo, CA",
+    "lat": 38.1037335,
+    "lng": -122.2294497
+  },
+  {
+    "name": "Foster Freeze",
+    "address": "1195 W Imola Ave, Napa, CA",
+    "lat": 38.279847,
+    "lng": -122.2584912
+  },
+  {
+    "name": "Fridas Mexican Grill",
+    "address": "1533 Trancas St, Napa, CA",
+    "lat": 38.3221373,
+    "lng": -122.3033271
+  },
+  {
+    "name": "Fusion Pizza",
+    "address": "414 Georgia St, Vallejo, CA",
+    "lat": 38.1011964,
+    "lng": -122.2562859
+  },
+  {
+    "name": "Genova Deli",
+    "address": "1550 Trancas St, Napa, CA",
+    "lat": 38.3223029,
+    "lng": -122.3033467
+  },
+  {
+    "name": "Hank'S Petaluma",
+    "address": "151 Petaluma Blvd S, Petaluma, CA",
+    "lat": 38.2329851,
+    "lng": -122.6374613
+  },
+  {
+    "name": "Hideaway - Petaluma",
+    "address": "128 Kentucky St, Petaluma, CA",
+    "lat": 38.2343167,
+    "lng": -122.6413471
+  },
+  {
+    "name": "Hop Creek",
+    "address": "3253 Browns Valley Rd, Napa, CA",
+    "lat": 38.3041333,
+    "lng": -122.328868
+  },
+  {
+    "name": "Jacobs Pizzeria",
+    "address": "1266 Broadway, Sonoma, CA",
+    "lat": 38.278186,
+    "lng": -122.459356
+  },
+  {
+    "name": "Jalapenos Mexican Food",
+    "address": "5201 Sonoma Blvd Ste 27, Vallejo, CA",
+    "lat": 38.153965,
+    "lng": -122.254011
+  },
+  {
+    "name": "Joe'S Taco Lounge",
+    "address": "382 Miller Ave, Mill Valley, CA",
+    "lat": 37.8972018,
+    "lng": -122.5371028
+  },
+  {
+    "name": "Julies Hummas Bar And Grill",
+    "address": "1026 Court St, San Rafael, CA",
+    "lat": 37.9733457,
+    "lng": -122.526911
+  },
+  {
+    "name": "L&L Hawaiian Barbecue",
+    "address": "7320 Redwood Blvd, Novato, CA",
+    "lat": 38.1062596,
+    "lng": -122.5705511
+  },
+  {
+    "name": "La Azteca Taqueria",
+    "address": "1420 S Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2358022,
+    "lng": -122.6022171
+  },
+  {
+    "name": "La Cuchara Vallejo",
+    "address": "105 Couch St, Vallejo, CA",
+    "lat": 38.1153556,
+    "lng": -122.2537127
+  },
+  {
+    "name": "La Maison De La Reine",
+    "address": "807 Grant Ave, Novato, CA",
+    "lat": 38.1069111,
+    "lng": -122.5667498
+  },
+  {
+    "name": "Le Croissant Cafe",
+    "address": "150 Bellam Blvd, San Rafael, CA",
+    "lat": 37.961095,
+    "lng": -122.503057
+  },
+  {
+    "name": "Left Bank FSD",
+    "address": "507 Magnolia Ave, Larkspur, CA",
+    "lat": 37.9207443,
+    "lng": -122.5304208
+  },
+  {
+    "name": "Loch Lomond Yacht Club",
+    "address": "95 Loch Lomond Dr, San Rafael, CA",
+    "lat": 37.9732657,
+    "lng": -122.4828454
+  },
+  {
+    "name": "Los Molcajetes Sonoma",
+    "address": "19101 Sonoma Hwy, Sonoma, CA",
+    "lat": 38.3004283,
+    "lng": -122.4750474
+  },
+  {
+    "name": "Lucchesis Deli",
+    "address": "301 S Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2485173,
+    "lng": -122.6238273
+  },
+  {
+    "name": "Lumberjacks",
+    "address": "732 E Washington St, Petaluma, CA",
+    "lat": 38.2416835,
+    "lng": -122.6323573
+  },
+  {
+    "name": "M & G Burgers",
+    "address": "989 Magnolia Ave, Larkspur, CA",
+    "lat": 37.946059,
+    "lng": -122.5454526
+  },
+  {
+    "name": "M And G Burgers",
+    "address": "2017 Sir Francis Drake Blvd, Fairfax, CA",
+    "lat": 37.9893637,
+    "lng": -122.5912606
+  },
+  {
+    "name": "Mary'S Slice Shack",
+    "address": "19327 Sonoma Hwy, Sonoma, CA",
+    "lat": 38.4495877,
+    "lng": -122.6142267
+  },
+  {
+    "name": "Marys Pizza",
+    "address": "18636 Sonoma Hwy, Boyes Hot Springs, CA",
+    "lat": 38.3079034,
+    "lng": -122.4786313
+  },
+  {
+    "name": "Marys Pizza #2",
+    "address": "8 W Spain St, Sonoma, CA",
+    "lat": 38.2938901,
+    "lng": -122.458756
+  },
+  {
+    "name": "Marys Pizza Shack",
+    "address": "423 N Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2556019,
+    "lng": -122.6375189
+  },
+  {
+    "name": "Marys Slice Shack",
+    "address": "14 W Spain St, Sonoma, CA",
+    "lat": 38.2938924,
+    "lng": -122.4587802
+  },
+  {
+    "name": "Mcnears Restaurant",
+    "address": "23 Petaluma Blvd N, Petaluma, CA",
+    "lat": 38.2334339,
+    "lng": -122.6396143
+  },
+  {
+    "name": "Mi Jalisco Restaurante",
+    "address": "1400 Tennessee St, Vallejo, CA",
+    "lat": 38.109886,
+    "lng": -122.240595
+  },
+  {
+    "name": "Mi Pueblo El Centro",
+    "cuisine": "Mexican Cuisine",
+    "address": "108 Kentucky St #2926, Petaluma, CA 94952",
+    "lat": 38.2343072,
+    "lng": -122.6410682
+  },
+  {
+    "name": "Mi Pueblo El Centro",
+    "address": "108 Kentucky St, Petaluma, CA",
+    "lat": 38.2340679,
+    "lng": -122.6411756
+  },
+  {
+    "name": "Mi Pueblo Marin",
+    "address": "5800 Northgate Dr, San Rafael, CA",
+    "lat": 38.0047935,
+    "lng": -122.5446607
+  },
+  {
+    "name": "Mi Pueblo Novato",
+    "address": "905 Grant Ave, Novato, CA",
+    "lat": 38.1072894,
+    "lng": -122.5691332
+  },
+  {
+    "name": "Mi Pueblo Restaurant",
+    "address": "800 Petaluma Blvd N, Petaluma, CA",
+    "lat": 38.2430442,
+    "lng": -122.6439311
+  },
+  {
+    "name": "Mi Pueblo Taqueria",
+    "address": "208 Sir Francis Drake Blvd, San Anselmo, CA",
+    "lat": 37.9743897,
+    "lng": -122.5617224
+  },
+  {
+    "name": "Michaels Sourdough Sandwiches",
+    "address": "42 Digital Dr, Novato, CA",
+    "lat": 38.0707813,
+    "lng": -122.531113
+  },
+  {
+    "name": "Moose Lodge",
+    "address": "337 Nebraska St, Vallejo, CA",
+    "lat": 38.1138261,
+    "lng": -122.2539859
+  },
+  {
+    "name": "Mr Moms Cafe",
+    "address": "931 Petaluma Blvd S, Petaluma, CA",
+    "lat": 38.2285034,
+    "lng": -122.6258969
+  },
+  {
+    "name": "Mr Pickles Sanwich Shop",
+    "address": "1014 Court St, San Rafael, CA",
+    "lat": 37.9732535,
+    "lng": -122.5269259
+  },
+  {
+    "name": "Murphys Irish Pub And Restaurant",
+    "address": "464 1st St E, Sonoma, CA",
+    "lat": 38.2924023,
+    "lng": -122.4558064
+  },
+  {
+    "name": "Napa Noodles",
+    "address": "1124 1st St, Napa, CA",
+    "lat": 38.2988479,
+    "lng": -122.2863489
+  },
+  {
+    "name": "Napasport Steakhouse And Sports Lounge",
+    "address": "145 Gasser Dr, Napa, CA",
+    "lat": 38.2838047,
+    "lng": -122.2785491
+  },
+  {
+    "name": "Napoli Pizzeria",
+    "address": "124 Tennessee St, Vallejo, CA",
+    "lat": 38.1101676,
+    "lng": -122.260627
+  },
+  {
+    "name": "New York Pizza Kitchen",
+    "address": "657 Trancas St, Napa, CA",
+    "lat": 38.3216717,
+    "lng": -122.3069578
+  },
+  {
+    "name": "Nick The Greek",
+    "address": "441 N Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2552402,
+    "lng": -122.6368814
+  },
+  {
+    "name": "Nick The Greek",
+    "address": "165 Plaza Dr, Vallejo, CA",
+    "lat": 38.1323578,
+    "lng": -122.218988
+  },
+  {
+    "name": "Nick The Greek Greenbrae",
+    "address": "300 Bon Air Ctr, Greenbrae, CA",
+    "lat": 37.946102,
+    "lng": -122.5239501
+  },
+  {
+    "name": "Nick The Greek Novato",
+    "address": "128 Vintage Way, Novato, CA",
+    "lat": 38.0914662,
+    "lng": -122.556108
+  },
+  {
+    "name": "No Name Bar",
+    "address": "757 Bridgeway, Sausalito, CA",
+    "lat": 37.856668,
+    "lng": -122.4803291
+  },
+  {
+    "name": "Ohana Hawaiian BBQ",
+    "address": "205 S Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2491738,
+    "lng": -122.6247662
+  },
+  {
+    "name": "Old Chicago Pizza",
+    "address": "1390 N Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2753773,
+    "lng": -122.6674063
+  },
+  {
+    "name": "Old Chicago Pizza.",
+    "address": "41 Petaluma Blvd N, Petaluma, CA",
+    "lat": 38.2335626,
+    "lng": -122.6403776
+  },
+  {
+    "name": "Papa Murphy'S ca195",
+    "address": "101 W American Canyon Rd Ste 504, American Canyon, CA",
+    "lat": 38.1653953,
+    "lng": -122.2546855
+  },
+  {
+    "name": "Paradise Sushi",
+    "address": "20 E Washington St, Petaluma, CA",
+    "lat": 38.2359941,
+    "lng": -122.6398575
+  },
+  {
+    "name": "Paradise Sushi San Rafael",
+    "address": "816 4th St, San Rafael, CA",
+    "lat": 37.9729519,
+    "lng": -122.5242895
+  },
+  {
+    "name": "Petaluma Sunshine Cafe",
+    "address": "701 Sonoma Mountain Pkwy Ste C4, Petaluma, CA",
+    "lat": 38.2697049,
+    "lng": -122.6389113
+  },
+  {
+    "name": "Pho 1 Noodle",
+    "address": "3885 Sonoma Blvd, Vallejo, CA",
+    "lat": 38.1267246,
+    "lng": -122.2559438
+  },
+  {
+    "name": "Pho Tao Noodle House",
+    "address": "75 Bellam Blvd Ste I, San Rafael, CA",
+    "lat": 37.9594077,
+    "lng": -122.5065662
+  },
+  {
+    "name": "Pho Vallejo Noodle House",
+    "address": "908 Admiral Callaghan Ln, Vallejo, CA",
+    "lat": 38.1309088,
+    "lng": -122.225047
+  },
+  {
+    "name": "Pko Bolevard Cafe",
+    "address": "1096 Petaluma Blvd N, Petaluma, CA",
+    "lat": 38.246347,
+    "lng": -122.6448288
+  },
+  {
+    "name": "Plaza Tequila Taqueria Bar And Gril",
+    "address": "600 E Washington St, Petaluma, CA",
+    "lat": 38.2399992,
+    "lng": -122.6337252
+  },
+  {
+    "name": "Quiote",
+    "address": "121 Kentucky St, Petaluma, CA",
+    "lat": 38.2341321,
+    "lng": -122.6414775
+  },
+  {
+    "name": "Ramen 101 Vallejo",
+    "address": "966 Admiral Callaghan Ln, Vallejo, CA",
+    "lat": 38.1339004,
+    "lng": -122.221489
+  },
+  {
+    "name": "Ranch Water",
+    "address": "711 4th St, San Rafael, CA",
+    "lat": 37.972469,
+    "lng": -122.5231535
+  },
+  {
+    "name": "Roast Haus -FSD",
+    "address": "1545 S Novato Blvd, Novato, CA",
+    "lat": 38.098344,
+    "lng": -122.5711893
+  },
+  {
+    "name": "Roccos Pizza",
+    "address": "711 E Blithedale Ave, Mill Valley, CA",
+    "lat": 37.9023088,
+    "lng": -122.5262649
+  },
+  {
+    "name": "Sabor A Mexico",
+    "address": "1559 4th St, San Rafael, CA",
+    "lat": 37.9737823,
+    "lng": -122.5354911
+  },
+  {
+    "name": "Scoma'S",
+    "address": "588 Bridgeway, Sausalito, CA",
+    "lat": 37.853996,
+    "lng": -122.4786705
+  },
+  {
+    "name": "Seared",
+    "address": "170 Petaluma Blvd Ste N, Petaluma, CA",
+    "lat": 38.2662202,
+    "lng": -122.6701097
+  },
+  {
+    "name": "Shed Country Store & BBQ",
+    "address": "3100 Golden Gate Dr, Napa, CA",
+    "lat": 38.259724,
+    "lng": -122.306535
+  },
+  {
+    "name": "Show De Carnes Brazilian Steakhouse",
+    "address": "196 Donahue St, Sausalito, CA",
+    "lat": 37.8736637,
+    "lng": -122.509065
+  },
+  {
+    "name": "Simmer Vietnamese Kitchen",
+    "address": "299 N Mcdowell Blvd, Petaluma, CA",
+    "lat": 38.2519369,
+    "lng": -122.631022
+  },
+  {
+    "name": "Sonoma Sourdough",
+    "address": "1320 Industrial Ave, Petaluma, CA",
+    "lat": 38.2673998,
+    "lng": -122.6668455
+  },
+  {
+    "name": "Sonoma Taco Shop",
+    "address": "210 Northgate One, San Rafael, CA",
+    "lat": 38.0083361,
+    "lng": -122.5474933
+  },
+  {
+    "name": "Squeeze Inn Hamburgers",
+    "address": "3383 Solano Ave, Napa, CA",
+    "lat": 38.3195358,
+    "lng": -122.3108626
+  },
+  {
+    "name": "Stefano's Pizza",
+    "cuisine": "Pizza",
+    "address": "1553 S Novato Blvd Ste J, Novato, CA 94947",
+    "lat": 38.0995368,
+    "lng": -122.571465
+  },
+  {
+    "name": "Stefano's Pizza",
+    "address": "11 E Blithedale Ave, Mill Valley, CA",
+    "lat": 37.90658,
+    "lng": -122.5459393
+  },
+  {
+    "name": "Stefano's Pizza",
+    "address": "330 San Anselmo Ave, San Anselmo, CA",
+    "lat": 37.973955,
+    "lng": -122.5621484
+  },
+  {
+    "name": "Stefano's Pizza",
+    "address": "5 Petaluma Blvd S Ste D, Petaluma, CA",
+    "lat": 38.2334086,
+    "lng": -122.6386481
+  },
+  {
+    "name": "Stefano's Pizza",
+    "address": "225 Corte Madera Ave, Corte Madera, CA",
+    "lat": 37.9257015,
+    "lng": -122.5300149
+  },
+  {
+    "name": "Stefano's Pizza",
+    "address": "424 Las Gallinas Ave, San Rafael, CA",
+    "lat": 38.0054981,
+    "lng": -122.5417103
+  },
+  {
+    "name": "Stefano's Pizza",
+    "address": "1553 S Novato Blvd, Novato, CA",
+    "lat": 38.0985962,
+    "lng": -122.5704677
+  },
+  {
+    "name": "Tam Commons Taproom & Kitchen",
+    "address": "1300 4th St, San Rafael, CA",
+    "lat": 37.9735727,
+    "lng": -122.5308805
+  },
+  {
+    "name": "Tannyas Taqueria",
+    "address": "1601 Jefferson St, Napa, CA",
+    "lat": 38.30246,
+    "lng": -122.294095
+  },
+  {
+    "name": "Taqueria & Pupuseria El Torogoz",
+    "address": "574 Magnolia Ave, Larkspur, CA",
+    "lat": 37.9375414,
+    "lng": -122.5346284
+  },
+  {
+    "name": "Taqueria La Hacienda",
+    "address": "17960 Sonoma Hwy, Sonoma, CA",
+    "lat": 38.3152537,
+    "lng": -122.4823675
+  },
+  {
+    "name": "Taqueria Maria",
+    "address": "640 3rd St, Napa, CA",
+    "lat": 38.2991005,
+    "lng": -122.2800733
+  },
+  {
+    "name": "Taqueria Marin",
+    "address": "13 Ross Cmn, Ross, CA",
+    "lat": 37.960525,
+    "lng": -122.555519
+  },
+  {
+    "name": "Taqueria Sonoma",
+    "address": "18615 Highway 12, Sonoma, CA",
+    "lat": 38.46436,
+    "lng": -122.6489668
+  },
+  {
+    "name": "Tarla",
+    "address": "1480 1st St, Napa, CA",
+    "lat": 38.2971974,
+    "lng": -122.289765
+  },
+  {
+    "name": "Taste Of Rome",
+    "address": "1000 Bridgeway, Sausalito, CA",
+    "lat": 37.8618082,
+    "lng": -122.4925551
+  },
+  {
+    "name": "The Big Easy",
+    "address": "128 American Aly, Petaluma, CA",
+    "lat": 38.2344564,
+    "lng": -122.6409165
+  },
+  {
+    "name": "The Block Petaluma",
+    "address": "20 Grey St, Petaluma, CA",
+    "lat": 38.2369442,
+    "lng": -122.6391648
+  },
+  {
+    "name": "The Garden By Tannery Bend Beerwork",
+    "address": "1500 1st St, Napa, CA",
+    "lat": 38.2971831,
+    "lng": -122.2899553
+  },
+  {
+    "name": "The New H Lounge",
+    "address": "472 Benicia Rd, Vallejo, CA",
+    "lat": 38.0955045,
+    "lng": -122.2330026
+  },
+  {
+    "name": "The New Yorker",
+    "address": "3 Petaluma Blvd N, Petaluma, CA",
+    "lat": 38.2333541,
+    "lng": -122.6394022
+  },
+  {
+    "name": "The Village Pizzeria",
+    "address": "1200 Grant Ave, Novato, CA",
+    "lat": 38.1082551,
+    "lng": -122.5725244
+  },
+  {
+    "name": "Toast Restaurant",
+    "cuisine": "Breakfast / American Cuisine",
+    "address": "800 Nave Dr, Novato, CA 94949",
+    "lat": 38.0640359,
+    "lng": -122.5333779
+  },
+  {
+    "name": "Toast Restaurant",
+    "address": "5800 Nave Dr, Novato, CA",
+    "lat": 38.0638891,
+    "lng": -122.533737
+  },
+  {
+    "name": "Tommy's Salsa",
+    "cuisine": "Mexican Cuisine",
+    "address": "8553 S Novato Blvd, Novato, CA 94947",
+    "lat": 38.0993714,
+    "lng": -122.570997
+  },
+  {
+    "name": "Tommy's Salsa Novato",
+    "address": "1553 S Novato Blvd Unit F, Novato, CA",
+    "lat": 38.0985962,
+    "lng": -122.5704677
+  },
+  {
+    "name": "Torches Restaurant Petaluma",
+    "address": "256 Petaluma Blvd, Petaluma, CA",
+    "lat": 38.2374025,
+    "lng": -122.6409034
+  },
+  {
+    "name": "Townhouse Cocktail Lounge",
+    "address": "401A Georgia St, Vallejo, CA",
+    "lat": 38.1000953,
+    "lng": -122.2047359
+  },
+  {
+    "name": "Trail Head Cafe",
+    "address": "351 San Andreas Dr, Novato, CA",
+    "lat": 38.1249513,
+    "lng": -122.6019875
+  },
+  {
+    "name": "Trancas Steakhouse",
+    "address": "999 Trancas St, Napa, CA",
+    "lat": 38.3232895,
+    "lng": -122.2955757
+  },
+  {
+    "name": "Valencia Market Y Taqueria",
+    "address": "1725 W Imola Ave, Napa, CA",
+    "lat": 38.281892,
+    "lng": -122.2931726
+  },
+  {
+    "name": "Villa Corona",
+    "address": "3614 Bel Aire Plz, Napa, CA",
+    "lat": 38.3228205,
+    "lng": -122.3074626
+  },
+  {
+    "name": "Vinny Gs",
+    "address": "1535 S Novato Blvd, Novato, CA",
+    "lat": 38.1087375,
+    "lng": -122.5844228
+  },
+  {
+    "name": "Vons Chicken Vallejo",
+    "address": "134 Robles Way, Vallejo, CA",
+    "lat": 38.0834587,
+    "lng": -122.2112891
+  },
+  {
+    "name": "West Coast Sourdough Strawberry Vil",
+    "address": "800 Redwood Hwy Frontage Rd, Mill Valley, CA",
+    "lat": 37.8973257,
+    "lng": -122.515305
+  },
+  {
+    "name": "Wilfreds Lounge",
+    "address": "967 1st St, Napa, CA",
+    "lat": 38.2992573,
+    "lng": -122.2849277
+  },
+  {
+    "name": "Yo Sushi",
+    "address": "114 Robles Way, Vallejo, CA",
+    "lat": 38.0836319,
+    "lng": -122.2117444
+  }
+]

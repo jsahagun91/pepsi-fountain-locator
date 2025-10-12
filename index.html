@@ -265,61 +265,20 @@
     crossorigin="anonymous"></script>
 
   <script>
-    // --- 1) Seed data --------------------------------------------------------
-    // Add new places by pushing objects to this array.
-    // You can provide lat/lng to skip geocoding.
-    const LOCATIONS = [
-      {
-        name: "Carmen’s La Hacienda",
-        cuisine: "Mexican Cuisine",
-        address: "1401 Grant Ave, Novato, CA 94945",
-        // If you know exact coords, fill them here to avoid geocoding each load.
-        // These center on Novato and are close; geocoder will refine the pin.
-        lat: 38.10850439838955, lng: -122.57459472422585
-      },
-      {
-        name: "Ayawaska Hilltop",
-        cuisine: "Peruvian Cuisine",
-        address: "850 Lamont Ave, Novato, CA 94945",
-        // If you know exact coords, fill them here to avoid geocoding each load.
-        // These center on Novato and are close; geocoder will refine the pin.
-        lat: 38.102375703396234, lng: -122.56754100186158
-      },
-      {
-        name: "El Rey Mexican Bar and Grill",
-        cuisine: "Mexican Cuisine",
-        address: "940 7th St, Novato, CA 94945",
-        // If you know exact coords, fill them here to avoid geocoding each load.
-        // These center on Novato and are close; geocoder will refine the pin.
-        lat: 38.108066269413854, lng: -122.57821210800124
-      },
-      {
-        name: "Toast Restaurant",
-        cuisine: "Breakfast / American Cuisine",
-        address: "800 Nave Dr, Novato, CA 94949",
-        // If you know exact coords, fill them here to avoid geocoding each load.
-        // These center on Novato and are close; geocoder will refine the pin.
-        lat: 38.06403593117181, lng: -122.53337790429713
-      },
-      {
-        name: "Tommy's Salsa",
-        cuisine: "Mexican Cuisine",
-        address: "8553 S Novato Blvd, Novato, CA 94947",
-        lat: 38.099371358211656, lng: -122.57099700058865
-      },
-      {
-        name: "Stefano's Pizza",
-        cuisine: "Pizza",
-        address: "1553 S Novato Blvd STE J, Novato, CA 94947",
-        lat: 38.09953678514126, lng: -122.57146499265697
-      },
-      {
-        name: "Mi Pueblo El Centro",
-        cuisine: "Mexican Cuisine",
-        address: "108 Kentucky St #2926, Petaluma, CA 94952",
-        lat: 38.23430715606938, lng: -122.64106824661548
-      },
-    ];
+    // --- 1) Data loading -----------------------------------------------------
+    async function loadLocations(){
+      try{
+        const response = await fetch('assets/locations.json', { cache: 'no-cache' });
+        if(!response.ok){
+          throw new Error(`Failed to load locations: ${response.status}`);
+        }
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
+      }catch(err){
+        console.error('Could not load locations', err);
+        return [];
+      }
+    }
 
     // --- 2) Map setup --------------------------------------------------------
     const map = L.map('map', {
@@ -367,6 +326,7 @@
     map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
 
     // --- 3) Utilities --------------------------------------------------------
+    let allLocations = [];
     const markers = [];
     let userLocation = null;
     const listEl = document.getElementById('list');
@@ -670,8 +630,12 @@
 
     // Initialize
     (async function init(){
-      const shuffled = shuffleArray(LOCATIONS);
-      for(const p of shuffled){ await addMarker(p); }
+      allLocations = await loadLocations();
+      const shuffled = shuffleArray(allLocations);
+      for(const rawPlace of shuffled){
+        const place = { ...rawPlace };
+        await addMarker(place);
+      }
       // Fit bounds if we have multiple; otherwise keep default view
       if(markers.length === 1){ map.setView(markers[0].marker.getLatLng(), 16); }
       if(markers.length > 1){
