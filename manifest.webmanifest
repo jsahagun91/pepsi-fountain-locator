@@ -1,0 +1,23 @@
+{
+  "name": "Pepsi Local Eats Locator",
+  "short_name": "Pepsi Locator",
+  "description": "Find nearby restaurants and bars serving Pepsi on fountain or bar guns.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#001437",
+  "theme_color": "#005CB9",
+  "icons": [
+    {
+      "src": "assets/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -377,7 +377,7 @@
     "name": "Marys Slice Shack",
     "address": "14 W Spain St, Sonoma, CA",
     "lat": 38.2938924,
-    "lng": -122.4587802
+    "lng": -122.4578176
   },
   {
     "name": "Mcnears Restaurant",
@@ -892,5 +892,12 @@
     "address": "114 Robles Way, Vallejo, CA",
     "lat": 38.0836319,
     "lng": -122.2117444
+  },
+  {
+    "name": "The Plaza Bistro",
+    "cuisine": "Italian and Meditaranean Cuisine",
+    "address": "420 1st St E, Sonoma, CA 95476",
+    "lat": 38.29322538671903,
+    "lng": -122.45638372186383
   }
 ]

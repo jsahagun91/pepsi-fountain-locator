@@ -8,19 +8,27 @@
   <meta property="og:title" content="Pepsi Fountain &amp; Bar Gun Locator" />
   <meta property="og:description" content="Find local restaurants serving Pepsi on fountain or bar guns." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/og-map.svg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:image" content="assets/pepsi-locator-pin.png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="612" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Pepsi Fountain &amp; Bar Gun Locator" />
   <meta name="twitter:description" content="Find local restaurants serving Pepsi on fountain or bar guns." />
-  <meta name="twitter:image" content="assets/og-map.svg" />
+  <meta name="twitter:image" content="assets/pepsi-locator-pin.png" />
+  <meta name="theme-color" content="#005CB9" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://{s}.tile.openstreetmap.org" crossorigin>
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="assets/Pepsi_2023.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <!-- Leaflet CSS -->
   <link
     rel="stylesheet"
@@ -173,36 +181,6 @@
       }
     }
 
-    .pepsi-pin{
-      position:relative;
-      width:44px;
-      height:58px;
-    }
-    .pepsi-pin__bubble{
-      position:absolute;
-      top:0;
-      left:50%;
-      transform:translateX(-50%);
-      width:36px;
-      height:36px;
-      border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, #7bc2ff 0%, #0a6ce0 45%, var(--brand-dark) 100%);
-      border:3px solid #fff;
-      box-shadow:0 10px 24px rgba(0,0,0,.4);
-    }
-    .pepsi-pin__bubble::after{
-      content:'';
-      position:absolute;
-      left:50%;
-      bottom:-22px;
-      transform:translateX(-50%);
-      width:0;
-      height:0;
-      border:13px solid transparent;
-      border-top:22px solid var(--brand);
-      filter:drop-shadow(0 6px 14px rgba(0,0,0,.4));
-    }
-
     details{color:var(--text)}
     details > div{color:rgba(244,247,255,.8)}
     summary{color:inherit}
@@ -331,13 +309,12 @@
     let userLocation = null;
     const listEl = document.getElementById('list');
     const searchInput = document.getElementById('searchInput');
-    const pepsiIcon = L.divIcon({
-      className: 'pepsi-pin',
-      html: '<div class="pepsi-pin__bubble"></div>',
-      iconSize: [44, 58],
-      iconAnchor: [22, 58],
-      popupAnchor: [0, -48],
-      tooltipAnchor: [0, -36]
+    const pepsiIcon = L.icon({
+      iconUrl: 'assets/pepsi-locator-pin-no-bg.png',
+      iconSize: [56, 56],
+      iconAnchor: [28, 56],
+      popupAnchor: [0, -50],
+      tooltipAnchor: [0, -44]
     });
 
     // Bottom sheet interaction
@@ -681,6 +658,15 @@
         map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
       }
     });
+
+    // Register service worker for PWA install/offline support
+    if('serviceWorker' in navigator){
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').catch((err) => {
+          console.error('Service worker registration failed', err);
+        });
+      });
+    }
   </script>
 </body>
 </html>
