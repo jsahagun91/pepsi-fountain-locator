@@ -1,6 +1,6 @@
 {
   "name": "Pepsi Local Eats Locator",
-  "short_name": "Pepsi Locator",
+  "short_name": "Pepsi Local Eats Locator",
   "description": "Find nearby restaurants and bars serving Pepsi on fountain or bar guns.",
   "start_url": ".",
   "scope": ".",
