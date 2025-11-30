@@ -45,6 +45,16 @@
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin="anonymous"
   />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+    crossorigin="anonymous"
+  />
   <style>
 
     .leaflet-control-attribution, .leaflet-control{
@@ -250,12 +260,15 @@
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin="anonymous"></script>
+  <script
+    src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"
+    crossorigin="anonymous"></script>
 
   <script>
     // --- 1) Data loading -----------------------------------------------------
     async function loadLocations(){
       try{
-        const response = await fetch('assets/locations.json', { cache: 'no-cache' });
+        const response = await fetch('assets/locations.json');
         if(!response.ok){
           throw new Error(`Failed to load locations: ${response.status}`);
         }
@@ -270,7 +283,8 @@
     // --- 2) Map setup --------------------------------------------------------
     const map = L.map('map', {
       zoomControl: false,
-      attributionControl: true
+      attributionControl: true,
+      preferCanvas: true
     });
 
     // OSM tiles
@@ -278,6 +292,14 @@
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+    const clusters = L.markerClusterGroup({
+      chunkedLoading: true,
+      chunkDelay: 16,
+      spiderfyOnMaxZoom: false,
+      showCoverageOnHover: false
+    });
+    map.addLayer(clusters);
 
     // Controls
     function getZoomControlPosition(){
@@ -315,6 +337,8 @@
     // --- 3) Utilities --------------------------------------------------------
     let allLocations = [];
     const markers = [];
+    let filteredList = [];
+    let renderedCount = 0;
     let userLocation = null;
     const listEl = document.getElementById('list');
     const searchInput = document.getElementById('searchInput');
@@ -330,6 +354,7 @@
     const sheetEl = document.querySelector('.sheet');
     const handleEl = sheetEl.querySelector('.handle');
     const toggleBtn = sheetEl.querySelector('.toggle-btn');
+    const sheetContentEl = sheetEl.querySelector('.content');
     const MIN_VISIBLE_HEIGHT = 140;
     let sheetState = 'peek';
     let sheetDragging = false;
@@ -549,16 +574,12 @@
 
     async function addMarker(place){
       try{
-        if((place.lat == null || place.lng == null) && place.address){
-          const {lat, lng} = await geocodeAddress(place.address);
-          place.lat = lat; place.lng = lng;
-        }
         if(place.lat == null || place.lng == null) return;
         const marker = L.marker([place.lat, place.lng], { icon: pepsiIcon });
         marker.bindPopup(createPopupHTML(place));
-        marker.addTo(map);
         const entry = { marker, place, distance: null };
         markers.push(entry);
+        clusters.addLayer(marker);
         if(userLocation){
           entry.distance = computeDistanceMiles(userLocation.lat, userLocation.lng, place.lat, place.lng);
         }
@@ -567,16 +588,13 @@
       }
     }
 
-    function renderList(items){
-      listEl.innerHTML = '';
-      const sortedItems = userLocation
-        ? [...items].sort((a, b) => {
-            const distA = Number.isFinite(a.distance) ? a.distance : Number.POSITIVE_INFINITY;
-            const distB = Number.isFinite(b.distance) ? b.distance : Number.POSITIVE_INFINITY;
-            return distA - distB;
-          })
-        : [...items];
-      sortedItems.forEach(({place, marker, distance}) => {
+    const MAX_VISIBLE = 200;
+    const LIST_BATCH_SIZE = 50;
+
+    function renderListWindow(){
+      if(renderedCount >= filteredList.length) return;
+      const nextItems = filteredList.slice(renderedCount, renderedCount + LIST_BATCH_SIZE);
+      nextItems.forEach(({place, marker, distance}) => {
         const distanceLabel = userLocation && Number.isFinite(distance)
           ? `<div class="meta">${distance.toFixed(1)} miles away</div>`
           : '';
@@ -599,9 +617,17 @@
         dirBtn.addEventListener('click', () => openDirections(place));
         listEl.appendChild(card);
       });
+      renderedCount += nextItems.length;
       if(sheetReady){
         requestAnimationFrame(updateSheetMetrics);
       }
+    }
+
+    function resetList(items){
+      listEl.innerHTML = '';
+      renderedCount = 0;
+      filteredList = items;
+      renderListWindow();
     }
 
     function filterList(term){
@@ -611,25 +637,43 @@
           .filter(Boolean)
           .some(x => x.toLowerCase().includes(q));
       });
-      renderList(filtered);
+      const sorted = userLocation
+        ? [...filtered].sort((a, b) => {
+            const distA = Number.isFinite(a.distance) ? a.distance : Number.POSITIVE_INFINITY;
+            const distB = Number.isFinite(b.distance) ? b.distance : Number.POSITIVE_INFINITY;
+            return distA - distB;
+          })
+        : filtered;
+      resetList(sorted.slice(0, MAX_VISIBLE));
+    }
+
+    if(sheetContentEl){
+      sheetContentEl.addEventListener('scroll', (event) => {
+        const el = event.currentTarget;
+        if(el.scrollTop + el.clientHeight >= el.scrollHeight - 50){
+          renderListWindow();
+        }
+      });
+    }
+
+    async function addMarkersInBatches(list, batchSize = 300){
+      for(let i = 0; i < list.length; i += batchSize){
+        const slice = list.slice(i, i + batchSize);
+        slice.forEach(addMarker);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+      }
     }
 
     // Initialize
     (async function init(){
       allLocations = await loadLocations();
       const shuffled = shuffleArray(allLocations);
-      for(const rawPlace of shuffled){
-        const place = { ...rawPlace };
-        await addMarker(place);
-      }
-      // Fit bounds if we have multiple; otherwise keep default view
+      await addMarkersInBatches(shuffled);
       if(markers.length === 1){ map.setView(markers[0].marker.getLatLng(), 16); }
       if(markers.length > 1){
-        const group = L.featureGroup(markers.map(m=>m.marker));
-        map.fitBounds(group.getBounds().pad(0.2));
+        map.fitBounds(clusters.getBounds().pad(0.2));
       }
-      // Render initial list
-      renderList(markers);
+      resetList(markers.slice(0, MAX_VISIBLE));
       initSheet();
     })();
 
@@ -661,8 +705,7 @@
     // Reset view
     document.getElementById('resetBtn').addEventListener('click', ()=>{
       if(markers.length > 1){
-        const group = L.featureGroup(markers.map(m=>m.marker));
-        map.fitBounds(group.getBounds().pad(0.2));
+        map.fitBounds(clusters.getBounds().pad(0.2));
       } else {
         map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
       }
