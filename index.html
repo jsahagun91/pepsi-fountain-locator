@@ -104,7 +104,10 @@
       background:var(--surface); border-top-left-radius:16px; border-top-right-radius:16px;
       border:1px solid var(--outline);
       box-shadow:0 -12px 36px rgba(0,0,0,.4);
-      max-height:55vh;
+      --sheet-height:55vh;
+      height:var(--sheet-height);
+      min-height:var(--sheet-height);
+      max-height:var(--sheet-height);
       transform:translateY(0);
       transition:transform .3s ease;
       will-change:transform;
@@ -129,7 +132,11 @@
     .sheet .toggle-btn:hover{
       background:rgba(255,255,255,0.22); border-color:rgba(255,255,255,0.55);
     }
-    .sheet .content{padding:.5rem .9rem 1rem; overflow:auto; max-height:calc(55vh - 28px)}
+    .sheet .content{
+      padding:.5rem .9rem 1rem;
+      overflow:auto;
+      max-height:calc(var(--sheet-height) - 28px);
+    }
     .sheet h2{font-weight:600; letter-spacing:.02em}
     .searchbar{display:flex; gap:.5rem; margin:.25rem 0 .5rem}
     .searchbar input{
@@ -209,7 +216,7 @@
     }
 
     @media (min-width: 720px){
-      .sheet{max-width:520px; left:auto; right:16px; bottom:16px; border-radius:16px; max-height:70vh}
+      .sheet{max-width:520px; left:auto; right:16px; bottom:16px; border-radius:16px; --sheet-height:70vh}
       .fab{bottom:auto; top:96px}
     }
   </style>

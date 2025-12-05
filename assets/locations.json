@@ -15427,9 +15427,9 @@
   },
   {
     "name": "Pete Be Center",
-    "address": "439 S Fisrt St, San Jose, CA",
-    "lat": 37.3361663,
-    "lng": -121.890591
+    "address": "439 S 1st St, San Jose, CA",
+    "lat": 37.3293137,
+    "lng": -121.8858164
   },
   {
     "name": "Andersen Bakery",
@@ -15511,9 +15511,10 @@
   },
   {
     "name": "Mas Loco Cantina",
-    "address": "98 S Second St, San Jose, CA",
-    "lat": 37.3361663,
-    "lng": -121.890591
+    "address": "98 S 2nd St, San Jose, CA",
+    "lat": 37.3350273,
+    "lng": -121.8881009,
+    "cuisine": "American Fusion"
   },
   {
     "name": "Renato Pizza FSD",
@@ -15538,9 +15539,9 @@
   },
   {
     "name": "Golden Catch Fish And Chips",
-    "address": "1100 N First Street St, San Jose, CA",
-    "lat": 37.3361663,
-    "lng": -121.890591
+    "address": "1100 N 1st St, San Jose, CA",
+    "lat": 37.3565844,
+    "lng": -121.9053833
   },
   {
     "name": "Gordon Biersch Brewery",
@@ -15720,9 +15721,9 @@
   },
   {
     "name": "Nexus Bar And Grill",
-    "address": "32 S Third St, San Jose, CA",
-    "lat": 37.3361663,
-    "lng": -121.890591,
+    "address": "32 S 3rd St, San Jose, CA",
+    "lat": 37.3366907,
+    "lng": -121.8878499,
     "cuisine": "Bar"
   },
   {
@@ -15864,9 +15865,9 @@
   },
   {
     "name": "Mr. Shrimp",
-    "address": "802 N 13St, San Jose, CA",
-    "lat": 37.3361663,
-    "lng": -121.890591
+    "address": "802 N 13th St, San Jose, CA",
+    "lat": 37.3573964,
+    "lng": -121.8892827
   },
   {
     "name": "Souther Kitchen",
