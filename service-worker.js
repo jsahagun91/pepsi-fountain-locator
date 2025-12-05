@@ -1,5 +1,5 @@
-const CACHE_NAME = 'pepsi-locator-static-v4.4.1';
-const RUNTIME_CACHE = 'pepsi-locator-runtime-v1.4.1';
+const CACHE_NAME = 'pepsi-locator-static-v4.4.2';
+const RUNTIME_CACHE = 'pepsi-locator-runtime-v1.4.2';
 const PRECACHE_ASSETS = [
   '.',
   'index.html',
